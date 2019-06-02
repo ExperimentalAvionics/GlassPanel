@@ -1,0 +1,125 @@
+<!-- 
+
+Flight Indicators plugin
+Based on Sébastien Matton's plugin
+Published under GPLv3 License.
+https://github.com/sebmatton/jQuery-Flight-Indicators
+ 
+ -->
+<html lang="en" dir="ltr">
+<head>
+<!-- Importing jQuery library -->
+<script src="js/jquery.min.js"></script> <!-- Was: src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" -->
+<script> 
+    $(function(){
+      $("#menu").load("menu.html"); 
+    });
+</script> 
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/flightindicators.css" />
+    <title>Classic</title>
+</head>
+<body style="background-color:#000000">
+<div id="menu"></div>
+<div class="container">
+    <span class="EFIS">
+        <div>
+            <span id="airspeed"></span>
+            <span id="attitude"></span>
+            <span id="altimeter"></span>            
+        </div><div>
+            <span id="turn_coordinator"></span>
+            <span id="heading"></span>
+            <span id="variometer"></span>
+        </div>
+     </span>
+     <span class="EMS"> 
+            <div id="clock" style="color:#FFFFFF;"></div>
+            <div id="tacho"></div>
+            <div id="oil"></div>
+     </span>
+</div>
+
+<!-- Importing the FlightIndicators library -->
+<script src="js/jquery.flightindicators.js"></script>
+
+<!-- Let start our scripts -->
+<script type="text/javascript">
+var attitude = $.flightIndicator('#attitude', 'attitude', {size:300, roll:0, pitch:0, showBox : true});
+var heading = $.flightIndicator('#heading', 'heading', {size:300, heading:150, showBox:true});
+var variometer = $.flightIndicator('#variometer', 'variometer', {size:300, vario:-5, showBox:false});
+var airspeed = $.flightIndicator('#airspeed', 'airspeed', {size:300, showBox:true});
+var altimeter = $.flightIndicator('#altimeter', 'altimeter', {size:300, showBox:true});
+var turn_coordinator = $.flightIndicator('#turn_coordinator', 'turn_coordinator', {size:300, turn:0, showBox:false});
+// var clock = $.flightIndicator('#clock', 'clock', {size:300});
+// var tacho = $.flightIndicator('#tacho', 'tacho', {size:300, RPM:0});
+// var oil = flightIndicator('#oil', 'oil', {size:300, temp:0, pressure:0});
+
+
+</script>
+<script src="js/socket.io.js"></script> <!-- include socket.io client side script. was src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js" -->
+<script>
+//var socket = io(); //load socket.io-client and connect to the host that serves the page
+var socket = io({transport: ['websocket'], upgrade: false});
+
+// stuff to send events from the screen to the client
+//window.addEventListener("load", function(){ //when page loads
+//  var lightbox = document.getElementById("light");
+//  lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+//    socket.emit("light", Number(this.checked)); //send button status to server (as 1 or 0)
+//  });
+//});
+
+
+socket.on('Vario', function (data) {
+  variometer.setVario(data);
+});
+
+socket.on('Heading', function (data) {
+  heading.setHeading(data);
+});
+
+socket.on('Turn', function (data) {
+  turn_coordinator.setTurn(data);
+});
+
+socket.on('QNH', function (data) {
+ altimeter.setPressure(data);
+ //document.getElementById("clock").innerHTML = data;
+});
+
+socket.on('Altitude', function (data) {
+ altimeter.setAltitude(data);
+});
+
+socket.on('Airspeed', function (data) {
+ airspeed.setAirSpeed(data);
+});
+
+socket.on('AH_Roll', function (data) {
+ attitude.setRoll(data);
+});
+
+socket.on('AH_Pitch', function (data) {
+ attitude.setPitch(data);
+});
+
+socket.on('TimeUTC', function (data) {
+ document.getElementById("clock").innerHTML = data;
+});
+
+socket.on('TachoRPM', function (data) {
+ tacho.setTachoRPM(data);
+});
+
+socket.on('OilTemperature', function (data) {
+ document.getElementById("oil").innerHTML = data;
+});
+
+socket.on('OilPressure', function (data) {
+ document.getElementById("oil").innerHTML = data;
+});
+</script>
+
+</body>
+</html>
