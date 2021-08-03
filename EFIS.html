@@ -1,0 +1,162 @@
+<html lang="en" dir="ltr">
+<head>
+<!-- Importing jQuery library -->
+<script src="js/jquery.min.js"></script> <!-- Was: src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" -->
+<!-- The following refernce to the menu is disabled as I found the feature of chnging the layout impractical and hard to maintain -->
+<!--
+<script>
+    $(function(){
+      $("#menu").load("menu.html");
+    });
+</script>
+-->
+    <meta charset="utf-8">
+<!--    <link rel="stylesheet" type="text/css" href="css/flightindicators.css" /> -->
+	<link rel="stylesheet" type="text/css" href="css/efis_style.css" />
+    <title>EFIS</title>
+</head>
+<!--<body style="background-color:#000000" onload="Pi2D2.init();" >-->
+<body style="background-color:#000000" onload="Pi2D2.init();" >
+<!-- The following refernce to the menu is disabled as I found the feature of chnging the layout impractical and hard to maintain -->
+<!-- <div id="menu"></div> -->
+<!-- <div style="height: 100%; width: 100%; left: 0; top: 30; position: fixed;"> -->
+<div style="height: 100%; width: 100%; left: 0; top: 0; position: fixed;">
+<!-- <div style="height: 100%; width: 100%; left: 0; top: 0; overflow: hidden; position: fixed;"> -->
+<svg class="Pi2D2_SVG" id="Pi2D2_SVG" version="1.1" xmlns="http://www.w3.org/2000/svg" viewbox="0,0,480,640"></svg>
+<!-- <svg class="Pi2D2_SVG" id="Pi2D2_SVG" version="1.1" xmlns="http://www.w3.org/2000/svg" height="320px" width="480px"></svg> -->
+</div>
+
+<script src="js/snap.svg-min.js"></script>
+<script src="js/Pi2D2.js"></script>
+<script src="js/socket.io.js"></script> <!-- include socket.io client side script. was src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js" -->
+<script>
+var socket = io(); //load socket.io-client and connect to the host that serves the page
+
+
+// stuff to send events from the screen to the client
+//window.addEventListener("load", function(){ //when page loads
+//  var lightbox = document.getElementById("light");
+//  lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+//    socket.emit("light", Number(this.checked)); //send button status to server (as 1 or 0)
+//  });
+//});
+
+
+socket.on('Vario', function (data) {
+//  variometer.setVario(data);
+  Pi2D2.vertspeed(data);
+});
+
+socket.on('Heading', function (data) {
+//  heading.setHeading(data);
+  Pi2D2.compass(data);
+});
+
+socket.on('Turn', function (data) {
+//  turn_coordinator.setTurn(data);
+  Pi2D2.turn(data);
+});
+
+socket.on('QNH', function (data) {
+// altimeter.setPressure(data);
+  Pi2D2.altimeter(data);
+});
+
+socket.on('Altitude', function (data) {
+// altimeter.setAltitude(data);
+   Pi2D2.altitude(data);
+});
+
+socket.on('Airspeed', function (data) {
+// airspeed.setAirSpeed(data);
+   Pi2D2.speed(data);
+});
+
+socket.on('AH_Roll', function (data) {
+// attitude.setRoll(data);
+   Pi2D2.roll(data);
+});
+
+socket.on('AH_Pitch', function (data) {
+// attitude.setPitch(data);
+   Pi2D2.pitch(data);
+});
+
+socket.on('TachoRPM', function (data) {
+   Pi2D2.rpm(data);
+});
+
+socket.on('FuelFlow', function (data) {
+   Pi2D2.FuelFlow(data);
+});
+
+socket.on('FuelPressure', function (data) {
+   Pi2D2.FuelPressure(data);
+});
+
+socket.on('FuelTank1', function (data) {
+   Pi2D2.FuelTank1(data);
+});
+
+socket.on('OilTemperature', function (data) {
+   Pi2D2.OilTemperature(data);
+});
+
+socket.on('OilPressure', function (data) {
+   Pi2D2.OilPressure(data);
+});
+
+socket.on('Volts', function (data) {
+   Pi2D2.Volts(data);
+});
+
+socket.on('AmpsAlternator', function (data) {
+   Pi2D2.AmpsAlternator(data);
+});
+
+socket.on('AmpsBattery', function (data) {
+   Pi2D2.AmpsBattery(data);
+});
+
+socket.on('TimeUTC', function (data) {
+   Pi2D2.FlightClock(data);
+});
+
+socket.on('EGT1', function (data) {
+   Pi2D2.EGT1(data);
+});
+
+socket.on('EGT2', function (data) {
+   Pi2D2.EGT2(data);
+});
+
+socket.on('EGT3', function (data) {
+   Pi2D2.EGT3(data);
+});
+
+socket.on('EGT4', function (data) {
+   Pi2D2.EGT4(data);
+});
+
+socket.on('CHT1', function (data) {
+   Pi2D2.CHT1(data);
+});
+
+socket.on('CHT2', function (data) {
+   Pi2D2.CHT2(data);
+});
+
+socket.on('CHT3', function (data) {
+   Pi2D2.CHT3(data);
+});
+
+socket.on('CHT4', function (data) {
+   Pi2D2.CHT4(data);
+});
+
+
+</script>
+
+
+</body>
+</html>

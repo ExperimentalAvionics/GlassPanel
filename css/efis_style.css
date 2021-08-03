@@ -13,12 +13,13 @@
   top: 0;
   left: 0; */
   position: relative;
-  
-} 
+	font-family: "verdana";
+
+}
 
 .vspeed_config {
 		font-size:25px;
-		color: #CCC;   
+		color: #CCC;
 }
 
 
@@ -33,7 +34,7 @@
 		border-bottom-left-radius:10px;
 		padding:5px;
 		position: fixed;
-		top: 0; left: 0; right: 0; bottom: 0; 
+		top: 0; left: 0; right: 0; bottom: 0;
 		z-index: 10;
 }
 .number_button {
@@ -54,7 +55,7 @@
 }
 
 .text_box {
-		width:150px; 
+		width:150px;
 		height:30px;
 		font-size:24px;
 		text-align:right;
