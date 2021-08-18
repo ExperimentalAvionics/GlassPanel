@@ -908,7 +908,7 @@ svg.text(322, 544, "CHT").attr({fill: '#ffffff', stroke: 'none', 'font-size': '1
          this.rpmNeedle = svg.rect( x-7, y, r/2, 6).attr( {stroke:'#999999', 'stroke-width': '1', fill: '#FFFFFF'});
 
   //       rpmBox = svg.text( 440, 390, v.rpm).attr( {fill: '#ffffff', stroke: 'none', 'font-size': '20'});
-         rpmBox = svg.text( x+r-35, y, 0).attr( {fill: '#ffffff', stroke: 'none', 'font-size': '30'});
+         rpmBox = svg.text( x+r, y-10, 0).attr( {fill: '#ffffff', 'dominant-baseline': 'middle', 'text-anchor': 'middle', stroke: 'none', 'font-size': '30'});
 
          return function ( rpm ){
              x = s.rpm.x;
@@ -1169,7 +1169,7 @@ svg.text(322, 544, "CHT").attr({fill: '#ffffff', stroke: 'none', 'font-size': '1
                      if (OilTemperature > MaxOilTemperature) {
                        this.OilTemperatureNeedle.animate({ transform: 't'+ BarSize +',0'}, 100);
                      } else {
-                       this.OilTemperatureNeedle.animate({ transform: 't'+ x +',0'}, 100);
+                       this.OilTemperatureNeedle.animate({ transform: 't0,0'}, 100);
                      }
                    }
                    return v.OilTemperature = OilTemperature;
@@ -1216,7 +1216,7 @@ svg.text(322, 544, "CHT").attr({fill: '#ffffff', stroke: 'none', 'font-size': '1
                       if (Volts > MaxVolts) {
                         this.VoltsNeedle.animate({ transform: 't'+ BarSize +',0'}, 100);
                       } else {
-                        this.VoltsNeedle.animate({ transform: 't'+ x +',0'}, 100);
+                        this.VoltsNeedle.animate({ transform: 't0,0'}, 100);
                       }
                     }
                     return v.Volts = Volts;

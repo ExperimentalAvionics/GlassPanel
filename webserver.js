@@ -117,6 +117,27 @@ var GPS_TRK_T = 0;
 var TimeUTC = '00:00:00';
 var TempSeconds = 0;
 
+var TS_TachoRPM = 0;
+var TS_FuelPressure = 0;
+var TS_FuelFlow = 0;
+var TS_FuelTank1 = 0;
+var TS_OilTemperature = 0;
+var TS_OilPressure = 0;
+var TS_EGT1 = 0;
+var TS_EGT2 = 0;
+var TS_EGT3 = 0;
+var TS_EGT4 = 0;
+var TS_CHT1 = 0;
+var TS_CHT2 = 0;
+var TS_CHT3 = 0;
+var TS_CHT4 = 0;
+var TS_Volts = 0;
+var TS_AmpsAlternator = 0;
+var TS_AmpsBattery = 0;
+var TS_GPS_GS = 0;
+var TS_GPS_Alt = 0;
+var TS_GPS_TRK_T = 0;
+
 
 
 //  socket.on('light', function(data) { //get light switch status from client
@@ -199,7 +220,8 @@ db.serialize(() => {
 			}
             break;
       case 'RPM':
-			if (TachoRPM != row.Param_Value) {
+			if (TachoRPM != row.Param_Value || d.getTime() - TS_TachoRPM > 12000) {
+        TS_TachoRPM = d.getTime() - Math.floor(Math.random() * 5000);
 				TachoRPM = row.Param_Value;
 //        TachoRPM = FuelFlow*2;                      //******************************************************
 				socket.emit('TachoRPM', TachoRPM );
@@ -207,14 +229,16 @@ db.serialize(() => {
 			}
             break;
       case 'FuelPressure':
-      if (FuelPressure != row.Param_Value) {
+      if (FuelPressure != row.Param_Value || d.getTime() - TS_FuelPressure > 12000) {
+          TS_FuelPressure = d.getTime() - Math.floor(Math.random() * 5000);
       		FuelPressure = row.Param_Value;
 //          FuelPressure = FuelFlow/10000;
       		socket.emit('FuelPressure', FuelPressure/1000 );
       }
             break;
       case 'FuelFlow':
-      if (FuelFlow != row.Param_Value) {
+      if (FuelFlow != row.Param_Value || d.getTime() - TS_FuelFlow > 12000) {
+          TS_FuelFlow = d.getTime() - Math.floor(Math.random() * 5000);
       		FuelFlow = row.Param_Value;
       		socket.emit('FuelFlow', FuelFlow/100 );
       }
@@ -228,49 +252,56 @@ db.serialize(() => {
       break;
 
       case 'OilTemperature':
-			if (OilTemperature != row.Param_Value) {
+			if (OilTemperature != row.Param_Value || d.getTime() - TS_OilTemperature > 12000) {
+        TS_OilTemperature = d.getTime() - Math.floor(Math.random() * 5000);
 				OilTemperature = row.Param_Value;
 				socket.emit('OilTemperature', OilTemperature/10 );
 			}
             break;
       case 'OilPressure':
-			if (OilPressure != row.Param_Value) {
+			if (OilPressure != row.Param_Value || d.getTime() - TS_OilPressure > 12000) {
+        TS_OilPressure = d.getTime() - Math.floor(Math.random() * 5000);
 				OilPressure = row.Param_Value;
 				socket.emit('OilPressure', OilPressure/1000 );
 			}
             break;
 
       case 'EGT1':
-      if (EGT1 != row.Param_Value) {
+      if (EGT1 != row.Param_Value || d.getTime() - TS_EGT1 > 12000) {
+          TS_EGT1 = d.getTime() - Math.floor(Math.random() * 5000);
       		EGT1 = row.Param_Value;
 //          EGT1 = FuelFlow*2/10;                      //******************************************************
       		socket.emit('EGT1', EGT1 );
       }
       break;
       case 'EGT2':
-      if (EGT2 != row.Param_Value) {
+      if (EGT2 != row.Param_Value || d.getTime() - TS_EGT2 > 12000) {
+          TS_EGT2 = d.getTime() - Math.floor(Math.random() * 5000);
       		EGT2 = row.Param_Value;
 //          EGT2 = FuelFlow*2/10;                      //******************************************************
       		socket.emit('EGT2', EGT2 );
       }
       break;
       case 'EGT3':
-      if (EGT3 != row.Param_Value) {
-      		EGT3 = row.Param_Value;
+      if (EGT3 != row.Param_Value || d.getTime() - TS_EGT3 > 12000) {
+          TS_EGT3 = d.getTime() - Math.floor(Math.random() * 5000);
+          EGT3 = row.Param_Value;
 //          EGT3 = FuelFlow*2/10;                      //******************************************************
       		socket.emit('EGT3', EGT3 );
       }
       break;
       case 'EGT4':
-      if (EGT4 != row.Param_Value) {
-      		EGT4 = row.Param_Value;
+      if (EGT4 != row.Param_Value || d.getTime() - TS_EGT4 > 12000) {
+          TS_EGT4 = d.getTime() - Math.floor(Math.random() * 5000);
+          EGT4 = row.Param_Value;
 //          EGT4 = FuelFlow*2/10;                      //******************************************************
       		socket.emit('EGT4', EGT4 );
       }
       break;
 
       case 'CHT1':
-      if (CHT1 != row.Param_Value) {
+      if (CHT1 != row.Param_Value || d.getTime() - TS_CHT1 > 12000) {
+          TS_CHT1 = d.getTime() - Math.floor(Math.random() * 5000);
       		CHT1 = row.Param_Value;
       		socket.emit('CHT1', CHT1 );
       }
@@ -292,7 +323,8 @@ db.serialize(() => {
       break;
       */
       case 'CHT4':
-      if (CHT4 != row.Param_Value) {
+      if (CHT4 != row.Param_Value || d.getTime() - TS_CHT4 > 12000) {
+          TS_CHT4 = d.getTime() - Math.floor(Math.random() * 5000);
       		CHT4 = row.Param_Value;
       		socket.emit('CHT4', CHT4 );
       }
